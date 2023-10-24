@@ -10,4 +10,24 @@ services:
       - .:/app
     environment:
       - NODE_ENV=development
-    command: npm start
+    command: /wait-for-it.sh localhost:5432 -- npm start
+    # depends_on:
+    #   - db
+    networks:
+      - postgres-network # Defina a rede aqui
+
+  # db:
+  #   image: postgres
+  #   container_name: zanetti-postgres
+  #   environment:
+  #     POSTGRES_PASSWORD: zanetti
+  #   ports:
+  #     - '5433:5432'
+  #   volumes:
+  #     - /Users/ikarodavidmigueldeoliveirasilva/Documents/Zanetti/volume:/var/lib/postgresql/data
+  #   networks:
+  #     - postgres-network # Defina a mesma rede aqui
+
+networks:
+  postgres-network:
+    driver: bridge
